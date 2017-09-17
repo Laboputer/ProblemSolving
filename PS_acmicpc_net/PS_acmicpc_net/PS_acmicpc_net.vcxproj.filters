@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CP_Advanced_1\1_Greedy\2875.cpp">
+    <ClCompile Include="CP_Advanced_1\1_Greedy\1080.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
