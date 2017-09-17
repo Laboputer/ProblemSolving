@@ -4,14 +4,7 @@ int N, M, K;
 int main()
 {
 	scanf("%d%d%d", &N, &M, &K);
-	while (K--)
-	{
-		if (N > M * 2) N--;
-		else M--;
-	}
-	N /= 2;
-
-	printf("%d", MIN(N, M));
+	printf("%d", MIN((N + M - K) / 3, MIN(N / 2, M)));
 
 	return 0;
 }

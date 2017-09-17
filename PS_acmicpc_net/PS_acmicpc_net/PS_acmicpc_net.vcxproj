@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CP_Advanced_1\1_Greedy\1744x.cpp" />
     <ClCompile Include="CP_Advanced_1\1_Greedy\2875.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
