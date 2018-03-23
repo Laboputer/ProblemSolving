@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="CP_Advanced_1\3_BinarySearch\1939.cpp">
+    <ClCompile Include="PS.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
