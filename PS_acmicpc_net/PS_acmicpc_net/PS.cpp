@@ -1,24 +1,17 @@
 #include <stdio.h>
-#define MAXN 105
+#define MOD 1000000000
+#define MAXN 1000005
 
 int N;
-int a[MAXN];
-long long d[MAXN][21];
-
+int d[MAXN];
 int main()
 {
 	scanf("%d", &N);
-	for (int i = 0; i < N; i++) scanf("%d", &a[i]);
-	d[0][a[0]] = 1;
-	for (int i = 1; i < N - 1; i++)
-	{
-		for (int j = 0; j < 21; j++)
-		{
-			if (0 <= j - a[i] && j - a[i] <= 20) d[i][j] += d[i - 1][j - a[i]];
-			if (0 <= j + a[i] && j + a[i] <= 20) d[i][j] += d[i - 1][j + a[i]];
-		}
-	}
-	printf("%lld\n", d[N - 2][a[N - 1]]);
+	if (N == 0) return 0 & printf("0\n0\n");
 
+	d[0] = 0, d[1] = 1;
+	for (int i = 2; i <= 1000000; i++) d[i] = (d[i - 1] + d[i - 2]) % MOD;
+	printf("%d\n", ((N < 0) && (N % 2 == 0)) ? -1 : 1);
+	printf("%d\n", d[N < 0 ? -N : N]);
 	return 0;
 }
