@@ -25,37 +25,27 @@ struct List
 	}
 };
 
-struct PriorQueue
+struct Queue
 {
-	int set[MAXQ + 1];
+	int set[MAXQ+1];
 	int size = 0;
-
-	void Swap(int i, int j) { int t = set[i]; set[i] = set[j]; set[j] = t; }
+	int head = 0;
+	int rear = -1;
 
 	void push(int x)
 	{
-		set[++size] = x;
-		int cur = size;
-		int p = cur >> 1;
-		while (p && set[cur] < set[p]) Swap(cur, p), cur >>= 1, p >>= 1;
+		rear = (rear + 1) % MAXQ;
+		set[rear] = x;
+		size++;
 	}
-
 	void Pop()
 	{
-		set[1] = set[size--];
-		int cur = 1;
-		int lc = cur * 2;
-		while (lc <= size)
-		{
-			if ((lc + 1 <= size) && (set[lc] > set[lc + 1]) && (set[cur] > set[lc + 1])) Swap(lc + 1, cur), cur = lc + 1, lc = cur << 1;
-			else if (set[lc] < set[cur]) Swap(lc, cur), cur = lc, lc = cur << 1;
-			else break;
-		}
+		head = (head + 1) % MAXQ;
+		size--;
 	}
-
 	int Top()
 	{
-		return set[1];
+		return set[head];
 	}
 };
 
@@ -73,8 +63,7 @@ int main()
 		G[a].push(b);
 		s[b]++;
 	}
-
-	PriorQueue q;
+	Queue q;
 	for (int i = 1; i <= N; i++) if (s[i] == 0) q.push(i);
 
 	while (q.size)
