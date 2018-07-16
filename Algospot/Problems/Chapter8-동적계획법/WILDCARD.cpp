@@ -22,8 +22,8 @@ int F(int n, int c)
 	ref = 0;
 	if (wild[n] == '*')
 	{
-		int i; for (i = c; strings[snum][i] != 0; i++) ref |= F(n + 1, i);
-		ref |= F(n + 1, i);
+		ref |= F(n + 1, c);
+		if (strings[snum][c] != 0) ref |= F(n, c + 1);
 	}
 	else if (wild[n] == '?' && strings[snum][c] != 0) ref |= F(n + 1, c + 1);
 	else if (wild[n] == strings[snum][c]) ref |= F(n + 1, c + 1);
