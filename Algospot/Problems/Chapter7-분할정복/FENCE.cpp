@@ -1,47 +1,56 @@
 #include <stdio.h>
 #define MAXN 20005
 
-int N;
-int h[MAXN];
-
-int MAX(int l, int r)
+struct stack
 {
-	return (l < r) ? r : l;
-}
-
-int MIN(int l, int r)
-{
-	return (l > r) ? r : l;
-}
-
-int F(int l, int r)
-{
-	if (l == r) return h[l];
-	int m = (l + r) >> 1;
-
-	int ans = MAX(F(l, m), F(m + 1, r));
-	int mn = MIN(h[m], h[m + 1]);
-	ans = MAX(ans, (2 * mn));
-	int len = 2;
-	int ll = m - 1, rr = m + 2;
-
-	while (l<= ll || rr <= r)
+	int arr[MAXN+1];
+	int cur = 0;
+	int sz = 0;
+	void push(int x)
 	{
-		len++;
-		if ((ll < l) || ((rr <= r) && (h[ll] < h[rr]))) mn = MIN(mn, h[rr++]);
-		else mn = MIN(mn, h[ll--]);
-		ans = MAX(ans, len*mn);
+		arr[++cur] = x;
+		sz++;
 	}
-	return ans;
-}
+	int top()
+	{
+		return arr[cur];
+	}
+	void pop()
+	{
+		cur--, sz--;
+	}
+};
 
+int N;
+int H[MAXN];
+int left[MAXN];
+int right[MAXN];
 int main()
 {
 	int t; scanf("%d", &t);
 	while (t--)
 	{
-		scanf("%d", &N); for (int i = 0; i < N; i++) scanf("%d", &h[i]);
-		printf("%d\n", F(0, N - 1));
+		scanf("%d", &N);
+		for (int i = 0; i < N; i++) scanf("%d", &H[i]);
+		H[N] = 0;
+
+		stack st;
+		for (int i = 0; i <= N; i++)
+		{
+			while (st.sz != 0 && H[st.top()] > H[i])
+			{
+				right[st.top()] = i - 1;
+				st.pop();
+			}
+
+			if (st.sz == 0) left[i] = 0;
+			else left[i] = st.top() + 1;
+			st.push(i);
+		}
+
+		int ans = 0;
+		for (int i = 0; i < N; i++) if (ans < (H[i] * (right[i] - left[i] + 1))) ans = H[i] * (right[i] - left[i] + 1);
+		printf("%d\n", ans);
 	}
 	return 0;
 }
