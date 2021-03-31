@@ -1,0 +1,65 @@
+#define MOD 1000000007
+class Solution {
+public:
+	int N;
+	int distance[20005];
+	int cntdp[20005];
+	vector<int> nodes[20005];
+	vector<int> weigths[20005];
+
+	struct node
+	{
+		int dist;
+		int v;
+		bool operator < (const node& rhs) const
+		{
+			return dist > rhs.dist;
+		}
+	};
+
+	int DFS(int x)
+	{
+		int& ref = cntdp[x];
+		if (ref != -1) return ref;
+
+		ref = 0;
+		for (int i = 0; i < nodes[x].size(); i++)
+		{
+			if (distance[x] > distance[nodes[x][i]])
+				ref = (ref + DFS(nodes[x][i])) % MOD;
+		}
+		return ref;
+	}
+
+	int countRestrictedPaths(int n, vector<vector<int>>& edges) {
+		N = n;
+		for (int i = 1; i <= n; i++) distance[i] = 2e9+1, cntdp[i] =-1;
+		distance[n] = 0; cntdp[n] = 1;
+
+		for (int i = 0; i < edges.size(); i++)
+		{
+			nodes[edges[i][0]].push_back(edges[i][1]);
+			weigths[edges[i][0]].push_back(edges[i][2]);
+			nodes[edges[i][1]].push_back(edges[i][0]);
+			weigths[edges[i][1]].push_back(edges[i][2]);
+		}
+
+		priority_queue<node> pq;
+		pq.push({ 0, N });
+		while (!pq.empty())
+		{
+			node top = pq.top(); pq.pop();
+			if (distance[top.v] < top.dist) continue;
+			for (int i = 0; i < nodes[top.v].size(); i++)
+			{
+				if (distance[top.v] + weigths[top.v][i] < distance[nodes[top.v][i]])
+				{
+					distance[nodes[top.v][i]] = distance[top.v] + weigths[top.v][i];
+					pq.push({ distance[nodes[top.v][i]], nodes[top.v][i] });
+				}
+			}
+		}
+
+		return DFS(1);
+	}
+};

@@ -1,0 +1,18 @@
+class Solution {
+public:
+	bool checkOnesSegment(string s) {
+		for (int i = 0; i < s.size(); i++)
+		{
+			if (s[i] == '0')
+			{
+				for (int k = i + 1; k < s.size(); k++)
+				{
+					if (s[k] == '1')
+						return false;
+				}
+				break;
+			}
+		}
+		return true;
+	}
+};
