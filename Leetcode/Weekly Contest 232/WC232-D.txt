@@ -1,0 +1,26 @@
+class Solution {
+public:
+	int maximumScore(vector<int>& nums, int k) {
+		int score = nums[k];
+		int mn = nums[k];
+		int lo = k;
+		int hi = k;
+
+		while (0 < lo || hi < nums.size() - 1)
+		{
+			if (lo == 0)
+				hi++;
+			else if (hi == nums.size() - 1)
+				lo--;
+			else if (nums[lo - 1] < nums[hi + 1])
+				hi++;
+			else
+				lo--;
+
+			mn = min(mn, min(nums[lo], nums[hi]));
+			score = max(score, mn * (hi - lo + 1));
+		}
+
+		return score;
+	}
+};
