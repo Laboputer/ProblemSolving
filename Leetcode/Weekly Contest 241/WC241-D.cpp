@@ -1,12 +1,33 @@
+#include <map>
+#include <algorithm>
+#include <queue>
+#include <set>
+using namespace std;
+
 class Solution {
 public:
-#define MOD 1000000007ll
-	long long d[1001][1001];
-	int rearrangeSticks(int n, int k) {
-		d[1][1] = 1;
-		for (int i = 2; i <= n; i++)
-			for (int j = 1; j <= k; j++)
-				d[i][j] = (d[i - 1][j - 1] + d[i - 1][j] * (long long)(i - 1)) % MOD;
-		return d[n][k];
+	int reductionOperations(vector<int>& nums) {
+		int cnt[50001] = { 0, };
+		for (int i = 0; i < nums.size(); i++) cnt[nums[i]]++;
+		vector<int> n;
+		for (int i = 50000; i >= 1; i--) n.push_back(i);
+
+		int sum = 0;
+		int ans = 0;
+		for (int k = 0; k < n.size() - 1; k++)
+		{
+			sum += cnt[n[k]];
+			ans += sum;
+		}
+		return ans;
 	}
 };
+int main()
+{
+	vector<int> v1 = { 5, 1, 3 };
+	vector<int> v2 = { 2,3,4,1,24 };
+
+	Solution().reductionOperations(v1);
+
+	return 0;
+}
